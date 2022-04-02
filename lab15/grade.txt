@@ -1,0 +1,15 @@
+lc3as output:
+STARTING PASS 1
+0 errors found in first pass.
+STARTING PASS 2
+0 errors found in second pass.
+
+"graded/emptystring": 10/10
+"graded/gibberish": 10/10
+"graded/registers": 10/10
+"graded/singlecharacter": 10/10
+"graded/voldemort": 10/10
+Proper halt: 5/5
+Functionality total: 55/55
+
+Total: 55/55

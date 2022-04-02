@@ -1,0 +1,42 @@
+Question 1: Describe the errors that occur when trying to assemble lab13.asm. Identify the cause of each error.
+
+   LINE  |  ADDRESS  |  CAUSE OF ERROR
+----------------------------------------------------------------------------------
+    14   |           |  Missing pseudo-op .ORIG at the beginning of program. 
+    17   |   x3001   |  Operand PCoffset9 overflow. 
+    19   |   x3003   |  Repeated "," will cause syntax error. 
+    20   |           |  Initialize R5 before main loops using "LD    R5,CLEAR".     [NOT SHOWN IN ERROR MESSAGES]
+    30   |   x3009   |  Operand PCoffset9 overflow. 
+    32   |   x300B   |  Undefined opcode "BRpz". Change to "BRzp". 
+    35   |   x300C   |  Operand PCoffset9 overflow. 
+    43   |   x3012   |  Missing pseudo-op .END at the end of program. 
+
+
+Question 2: For each label in the code, write down the corresponding memory location. 
+
+[Before Alteration]
+  SYMBOL     |   ADDRESS
+--------------------------
+  OUTERLOOP  |   x3004
+  INNERLOOP  |   x3005
+  INPUT      |   x300E
+  RESULT     |   x3011
+
+[After Alteration]
+  SYMBOL     |   ADDRESS
+--------------------------
+  OUTERLOOP  |   x3005
+  INNERLOOP  |   x3006
+  INPUT      |   x300F
+  CLEAR      |   x3010
+  NEG_ONE    |   x3011
+  RESULT     |   x3012
+
+
+Question 3: Between using labels and explicit memory locations/offsets, which one makes the most sense, and why?
+
+Answer: Using labels makes more sense. 
+        For one thing, it contributes to the human readability of the program, since the meanings of variables and procedures are reflected in the label names. 
+        For another, it saves the effort of calculating and re-calculating PC offsets, especially when significant changes are made to the code. 
+
+

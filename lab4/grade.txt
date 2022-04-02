@@ -1,0 +1,6 @@
+int a=256:  1/1
+while(a > 1):  1/1
+printf("%d\n", a):  1/1
+a = sqrt(a):  1/1
+no unnecessary modifications: 1/1
+Total: 8/8

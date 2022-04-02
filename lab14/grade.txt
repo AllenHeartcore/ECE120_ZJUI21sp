@@ -1,0 +1,24 @@
+lc3as output:
+STARTING PASS 1
+0 errors found in first pass.
+STARTING PASS 2
+0 errors found in second pass.
+
+"graded/kcharacter": 10/10
+"graded/question": 10/10
+"graded/registers": 10/10
+"graded/ycharacter": 10/10
+Proper halt: 5/5
+Functionality total: 45/45
+
+Single iterative construct to print every line of output: 10/10
+Single iterative construct to print every bit in a character: 10/10
+Single conditional construct to select character for printing: 5/5
+Style total: 25/25
+
+Introductory paragraph: 5/5
+Table of registers with explanation: 5/5
+Clear and well-commented code: 5/5
+Comments total: 15/15
+
+Total: 85/85

@@ -1,0 +1,44 @@
+
+Signed integer computation
+
+1. What is the largest value representable in 16-bit signed format? Smallest?
+	A: The largest value representable is 32767 (x7fff), the smallest is -32768 (x8000). 
+2. What is the result of the third computation? Why?
+	A: The result is -22536 (xa7f8), because two large positive numbers overflow when being added if a carry digit of 1 is produced at the highest digit. 
+3. Why does the fourth computation overflow, but not the fifth?
+	A: When 32767 (x7fff) is added by 1, the first digit of binary representation turns from 0 to 1, entering the negative range of -32768 (x8000). The first binary digit of -32767 (x8001) is already 1, which won't be changed if subtracted by 1, yielding a legible result of -32768 (x8000). We can also point to the fact that concerning absolute values, the magnitude of lower bound (32768) is larger than the higher bound (32767). 
+4. If you were to start at 0, and increment repeatedly (add 1), what pattern would you see (in signed mode)?
+
+Unsigned integer computation
+
+1. What is the largest value representable in 16-bit unsigned format? Smallest?
+	A: The largest value representable is 65535 (xffff), the smallest is 0 (x0000). 
+2. What result do you get from the first computation? Why?
+	A: The result is 65437 (xff9d), because the program parses "xff9d" differently. In signed 16-bit mode, the leading binary digit 1 means a negative number, while in unsigned 16-bit mode, the same 1 is interpreted as having a weight of 2^15=32768. 
+3. Why doesn't the second or third computation overflow?
+4. If you were to start at 0, and increment repeatedly (add 1), what pattern would you see (in unsigned mode)?
+5. What are the advantages and disadvantages of unsigned formats (compared to signed formats)?
+
+Multiplication, division, modulus
+
+1. What result do you get in the second and third computations? Why?
+	A: The second computation yields the result of -15536 (xc350), while the third yields 15536 (x3cb0). For the second computation, the actual result of 50000 exceeds the upper boundary of 32767 and overflows to become a negative number. For the third computation, the actual result of -50000 exceeds the lower boundary and overflows in the opposite direction, becoming a positive number. 
+2. What results do you get from computations 4-7? Why? (Hint: can signed 16-bit encoding represent fractions?)
+	A: Since signed 16-bit encoding cannot represent fractions, any non-integer real numbers are rounded down. 
+3. Does the result from computations 4-7 get rounded to the nearest integer? If not, what actually happens? Where might this behavior be useful? (Hint: what if you wanted to divide 11 candies between 3 people?)
+4. What does the modulus operator do for positive integers?
+5. What happens when you divide by 0? Modulus with 0? What happens to the binary-calculator program? Why might this be a good thing? (Hint: remember the discussion introduction?)
+6. Excluding division by 0, characterize the behavior of the modulus operation for positive and negative divisors and dividends (for a total of 2x2 = 4 combinations).
+
+Floating point
+
+1. Why is there an error in the fourth computation, but not the third? (Hint: how do you encode 0.25 and 0.3 in floating point?)
+	A: 0.25 can be accurately represented as x3e800000, but 0.3 can only be roughly represented as x3e99999a (with the ending binary bits of ...10011010, obviously rounded). This difference in rounding becomes obvious when the result of the subtraction, x42c76666, can only be interpreted as 99.699997 instead of 99.700000. An important fact to notice is that the earlier the first significant digit occurs, the lower the precision of representation will become, since the IEEE 754 standard is based on the so-called Binary Scientific Notation. 
+2. How does the result of the fifth computation compare to the fourth? Explain. (Hint: look at the hex representations of the results. How does the floating point format handle negative numbers?)
+	A: Expectedly, the fourth and fifth representations show nearly identical results, with a high degree of symmetry. Since the difference between positive and negative floats only occurs at the first binary digit (0:positive and 1:negative), the Exponent and Mantissa parts that actually participate in the calculation were hardly affected. 
+3. Mathematically, would you expect the same results in computations 6 and 7? Do you observe this result experimentally? Explain. (Hint: try stepping through each computation)
+	A: I would expect the same results mathematically, while the experimental facts turn me down. Tracking through each step of computation, the first and only error occurs when 9000.000000+0.000100=9000.000000. As stated before, the larger the exponent, the lower the precision. The huge difference of exponents (already 7 orders of magnitude in decimal representation, not to mention binary!) Therefore, the trivial 0.0001 is naturally ignored in the face of 9000. (This explanation can be verified by noticing that -5.000000+0.000100=-4.999900, which is correct.)
+4. What happens if you try computation 6 in double-precision (64-bit) floating-point mode? Why?
+5. Why is there noticeable error in computation 8, but not 9? (Hint: think of multiplying floating point numbers like multiplying two numbers in scientific notation, how do you do it?)
+6. The root cause of the Ariane 5 rocket failure was isolated to the conversion of a floating point number, which stored the horizontal component of the rocket's velocity, to a 16-bit signed integer. What is the most likely cause of the failure? (Hint: this wasn't some small rounding error, the computed velocity was way off, causing the system to go haywire)
+
