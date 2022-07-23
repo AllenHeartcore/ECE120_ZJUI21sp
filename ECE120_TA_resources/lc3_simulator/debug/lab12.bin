@@ -1,0 +1,20 @@
+; This is the file you will use for the lab assignment
+; Make sure to comment your code properly and don't exceed 
+; the line limitation for this assignment.  Good luck!
+0011 0001 0000 0000  ; x3100 - starting address of the program
+; The program description and code starts here
+0101 010 010 1 00000 ; x3100 - AND : R2 <- R2&0     (Initialize R2)
+0001 010 010 1 01010 ; x3101 - ADD : R2 <- R2+10    (Initialize R2 to #10 as a COUNTER of addends)
+1110 011 000101110   ; x3102 - LEA : R3 <- PC+x02E  (Initialize R3 for storing an ADDRESS for the addend)
+                     ;                                    [PC=x3103  Target=x3131  PCoffset9=x02E]
+0101 100 100 1 00000 ; x3103 - AND : R4 <- R4&0     (Initialize R4 for storing an ADDEND)
+0101 101 101 1 00000 ; x3104 - AND : R5 <- R5&0     (Initialize R5 for storing the accumulating SUM)
+0001 011 011 1 00001 ; x3105 - ADD : R3 <- R3+1     (Update ADDRESS)
+0110 100 011 000000  ; x3106 - LDR : R4 <- M[R3]    (Load ADDEND)
+0000 110 000000001   ; x3107 - BRnz  #1             (Skip if ADDEND is non-positive)
+                     ;                                    [PC=x3108  Target=x3109  PCoffset9=x001]
+0001 101 101 000 100 ; x3108 - ADD : R5 <- R5+R4    (Add if ADDEND is positive, update SUM)
+0001 010 010 1 11111 ; x3109 - ADD : R2 <- R2-1     (Update COUNTER)
+0000 001 111111010   ; x310A - BRp   #-6            (Jump back to load another ADDEND)
+                     ;                                    [PC=x310B  Target=x3105  PCoffset9=xFFA]
+1111 0000 00100101   ; x310B - TRAP  x25            (HALT execution)
